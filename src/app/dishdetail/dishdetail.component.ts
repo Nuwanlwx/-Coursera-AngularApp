@@ -21,12 +21,15 @@ export class DishdetailComponent implements OnInit {
     private route: ActivatedRoute,
     private location: Location) { }
 
-  ngOnInit() {
-    console.log('dsdsd');
-    this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-     .subscribe(dish => this.dish = dish);
-  }
-  goBack(): void {
-    this.location.back();
-  }
+    ngOnInit() {
+      this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds);
+      this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
+      .subscribe(dish => { this.dish = dish; this.setPrevNext(String(dish.id)); });
+    }
+  
+    setPrevNext(dishId: string) {
+      const index = this.dishIds.indexOf(dishId);
+      this.prev = this.dishIds[(this.dishIds.length + index - 1) % this.dishIds.length];
+      this.next = this.dishIds[(this.dishIds.length + index + 1) % this.dishIds.length];
+    }
 }
