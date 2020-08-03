@@ -29,6 +29,7 @@ import { DishService } from './services/dish.service';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import { PromotionService } from './services/promotion.service';
 import { LeaderService } from './services/leader.service';
+import { ProcessHTTPMsgService } from './services/process-httpmsg.service';
 import { LoginComponent } from './login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material';
@@ -64,13 +65,13 @@ import { baseURL } from './shared/baseurl';
     FlexLayoutModule,
     FormsModule ,
     MatSliderModule,
-    ReactiveFormsModule,HttpClientModule,
+    ReactiveFormsModule, HttpClientModule,
     AppRoutingModule
   ],
   entryComponents: [
     LoginComponent
 ],
-  providers: [DishService, PromotionService,LeaderService,
+  providers: [DishService, PromotionService, LeaderService, ProcessHTTPMsgService,
     {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent]
 })
