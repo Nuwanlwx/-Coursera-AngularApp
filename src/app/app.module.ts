@@ -32,8 +32,8 @@ import { LeaderService } from './services/leader.service';
 import { LoginComponent } from './login/login.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSliderModule } from '@angular/material';
-
-
+import { HttpClientModule } from '@angular/common/http';
+import { baseURL } from './shared/baseurl';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,13 +64,14 @@ import { MatSliderModule } from '@angular/material';
     FlexLayoutModule,
     FormsModule ,
     MatSliderModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule,HttpClientModule,
     AppRoutingModule
   ],
   entryComponents: [
     LoginComponent
 ],
-  providers: [DishService, PromotionService,LeaderService],
+  providers: [DishService, PromotionService,LeaderService,
+    {provide: 'BaseURL', useValue: baseURL}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
