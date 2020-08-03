@@ -70,7 +70,7 @@ export const DISHES: Dish[] = [
                 rating: 3,
                 comment: 'Eat it, just eat it!',
                 author: 'Michael Jaikishan',
-                date: '2015-02-13T17:57:28.556094Z'
+                date: ' '
             },
             {
                 rating: 4,
