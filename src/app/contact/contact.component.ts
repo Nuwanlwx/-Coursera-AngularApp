@@ -2,6 +2,8 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
+import { FeedbackService } from '../services/feedback.service';
+// import { setTimeout } from 'timers';
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -39,7 +41,14 @@ export class ContactComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: Feedback;
   contactType = ContactType;
-  constructor(private fb: FormBuilder) {
+  feedbackcopy: Feedback;
+  feedbackRes: Feedback;
+  feedbackRescopy: Feedback;
+  errMess: string;
+  showForm: boolean = true;
+  showRes = false;
+  constructor(private fb: FormBuilder,
+    private feedbackservice: FeedbackService,) {
     this.createForm();
   }
 
@@ -47,7 +56,14 @@ export class ContactComponent implements OnInit {
   ngOnInit() {
   }
   createForm() {
-
+    // static min(min: number): ValidatorFn
+    // static max(max: number): ValidatorFn
+    // static required(control: AbstractControl): ValidationErrors | null
+    // static requiredTrue(control: AbstractControl): ValidationErrors | null
+    // static email(control: AbstractControl): ValidationErrors | null
+    // static minLength(minLength: number): ValidatorFn
+    // static maxLength(maxLength: number): ValidatorFn
+    // static pattern(pattern: string | RegExp): ValidatorFn
     this.feedbackForm = this.fb.group({
       firstname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
       lastname: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(25)] ],
@@ -84,8 +100,19 @@ export class ContactComponent implements OnInit {
   }
 
   onSubmit() {
+    this.showForm = false;
     this.feedback = this.feedbackForm.value;
     console.log(this.feedback);
+    this.feedbackservice.submitFeedback(this.feedback )
+    .subscribe(feedbackRes  => {
+      this.feedbackRes = feedbackRes; this.feedbackRescopy = feedbackRes;
+      console.log(this.feedbackRes);
+      this.showRes = true;
+      this.controlForm();
+    },
+    errmess => {this.feedback = null; this.feedbackcopy = null; this.errMess = <any>errmess; 
+      this.showRes = false;
+      this.controlForm(); });
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -96,5 +123,11 @@ export class ContactComponent implements OnInit {
       message: ''
     });
     this.feedbackFormDirective.resetForm();
+  }
+
+  controlForm() {
+    setTimeout(() => {
+      this.showForm = true;
+    }, 5000);
   }
 }

@@ -134,7 +134,7 @@ export class DishdetailComponent implements OnInit {
        .subscribe(dish => {
          this.dish = dish; this.dishcopy = dish;
        },
-       errmess => {this.dish = null; this.dishcopy = null; this.errMess = <any>errmess;})
+       errmess => {this.dish = null; this.dishcopy = null; this.errMess = <any>errmess; });
       console.log(  this.dish);
       this.commentForm.reset({
         author: '',
